@@ -1,0 +1,29 @@
+{
+    "name": "nickdekruijk/imageresize",
+    "description": "A simple, yet efficient solution for image resizing and caching with Laravel",
+    "license": "MIT",
+    "keywords": [ "image", "laravel", "resize", "php", "cache" ],
+    "homepage": "http://www.nickdekruijk.nl/packages/imageresize",
+    "authors": [
+        {
+            "name": "Nick de Kruijk",
+            "email": "git@nickdekruijk.nl"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.6.0",
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NickDeKruijk\\ImageResize\\ServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "NickDeKruijk\\ImageResize\\": "src/"
+        }
+    }
+}
