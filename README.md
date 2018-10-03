@@ -28,4 +28,4 @@ Referring to `http://domain.com/media/resized/thumbnail/images/test.jpg` will tr
 So the next time you refer to `http://domain.com/media/resized/thumbnail/images/test.jpg` the file does exist and the image is served without triggering any php/laravel code for optimal performance.
 
 ## Drawbacks
-There is however one disadvantage: if the original image is edited or removed the resized file will still remain the same since referring to it doesn't trigger the imageresize package. You will have to manually delete it or use the `php artisan imageresize:delete` command.
+There is however one disadvantage: if the original image is edited or removed the resized file will still remain the same since referring to it doesn't trigger the imageresize package. You will have to manually delete it or use the `php artisan imageresize:delete` command to delete all resized images from the `media/resized` folder.
