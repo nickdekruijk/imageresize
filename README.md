@@ -18,7 +18,7 @@ After installing for the first time publish the config file with
 
 `php artisan vendor:publish --tag=config --provider="NickDeKruijk\ImageResize\ServiceProvider"`
 
-A default config file called `imageresize.php` will be available in your Laravel `app/config` folder. See this file for more details.
+A default config file called `imageresize.php` will be available in your Laravel `/config` folder. See this file for more details.
 
 ## How does it work
 Let's assume you have an image in `/public/media/images/test.jpg` and a template called `thumbnail`. And have set the imageresize.route config to `media/resized`.
