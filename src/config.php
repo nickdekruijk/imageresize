@@ -34,11 +34,13 @@ return [
     |--------------------------------------------------------------------------
     |
     | type: crop or fit
-    | quality: jpeg quality in percentage (0 - 100)
+    | quality: jpeg quality in percentage (0 - 100, ignored for gif/png)
     | width: image width (or maximum width when type is 'fit')
     | height: image height (or maximum height when type is 'fit')
     | grayscale: when true apply IMG_FILTER_GRAYSCALE filter
     | blur: use IMG_FILTER_GAUSSIAN_BLUR filter (higher value is stronger blur)
+    | upscale: when true upscale the image if the template width and height are larger than original (defaults to false)
+    | output: Force a specific scaled image format (jpeg/gif/png) instead of original
     |
     */
 
