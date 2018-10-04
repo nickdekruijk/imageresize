@@ -48,6 +48,7 @@ return [
             'quality' => 70,
             'width' => 180,
             'height' => 180,
+            'upscale' => true,
         ],
         'medium' => [
             'type' => 'crop',

@@ -114,10 +114,16 @@ class ResizeController extends Controller
             } else {
                 $template['height'] = $template['width'] / $ratio_orig;
             }
-    		$image_p = imagecreatetruecolor($template['width'], $template['height']);
-    		imagealphablending($image_p, false);
-    		imagesavealpha($image_p, true);
-    		imagecopyresampled($image_p, $image_a, 0, 0, 0, 0, $template['width'], $template['height'], $originalWidth, $originalHeigth);
+            if (($template['width'] > $originalWidth || $template['height'] > $originalHeigth) && (!isset($template['upscale']) || $template['upscale'] === false ) ) {
+                # Don't upscale image just copy it
+        		$image_p = imagecreatetruecolor($originalWidth, $originalHeigth);
+        		imagecopy($image_p, $image_a, 0, 0, 0, 0, $originalWidth, $originalHeigth);
+            } else {
+        		$image_p = imagecreatetruecolor($template['width'], $template['height']);
+        		imagealphablending($image_p, false);
+        		imagesavealpha($image_p, true);
+        		imagecopyresampled($image_p, $image_a, 0, 0, 0, 0, $template['width'], $template['height'], $originalWidth, $originalHeigth);
+    		}
     		imagedestroy($image_a);
         } else {
             $this->error('Invalid template type ' . $template['type']);
