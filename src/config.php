@@ -61,6 +61,7 @@ return [
             'quality' => 70,
             'width' => 1600,
             'height' => 1600,
+            'output' => 'jpeg',
         ],
         'blur' => [
             'type' => 'fit',

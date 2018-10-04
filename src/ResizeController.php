@@ -143,6 +143,11 @@ class ResizeController extends Controller
 
         $this->makepath($target);
 
+        # Change type to force output format if used in template
+        if (isset($template['output'])) {
+            $type = 'image/' . $template['output'];
+        }
+
         # Save the resized image in a variable
     	if ($type == 'image/gif') {
     		imagegif($image_p, $target) or $this->error('Write error');
