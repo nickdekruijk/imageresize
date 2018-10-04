@@ -145,7 +145,11 @@ class ResizeController extends Controller
 
         # Change type to force output format if used in template
         if (isset($template['output'])) {
-            $type = 'image/' . $template['output'];
+            if (in_array($template['output'], ['jpg', 'jpeg', 'png', 'gif'])) {
+                $type = 'image/' . $template['output'];
+            } else {
+                self::error('Invalid output ' . $template['output']);
+            }
         }
 
         # Save the resized image in a variable
