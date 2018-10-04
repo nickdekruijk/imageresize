@@ -18,7 +18,7 @@ After installing for the first time publish the config file with
 
 `php artisan vendor:publish --tag=config --provider="NickDeKruijk\ImageResize\ServiceProvider"`
 
-A default config file called `imageresize.php` will be available in your Laravel `app/config` folder. See this file for more details.
+A default config file called `imageresize.php` will be available in your Laravel `/config` folder. See this file for more details.
 
 ## How does it work
 Let's assume you have an image in `/public/media/images/test.jpg` and a template called `thumbnail`. And have set the imageresize.route config to `media/resized`.
@@ -28,4 +28,4 @@ Referring to `http://domain.com/media/resized/thumbnail/images/test.jpg` will tr
 So the next time you refer to `http://domain.com/media/resized/thumbnail/images/test.jpg` the file does exist and the image is served without triggering any php/laravel code for optimal performance.
 
 ## Drawbacks
-There is however one disadvantage: if the original image is edited or removed the resized file will still remain the same since referring to it doesn't trigger the imageresize package. You will have to manually delete it or use the `php artisan imageresize:delete` command.
+There is however one disadvantage: if the original image is edited or removed the resized file will still remain the same since referring to it doesn't trigger the imageresize package. You will have to manually delete it or use the `php artisan imageresize:delete` command to delete all resized images from the `media/resized` folder.
