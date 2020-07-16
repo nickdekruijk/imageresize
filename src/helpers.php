@@ -11,6 +11,8 @@ if (!function_exists('asset_resized')) {
      */
     function asset_resized($template, $path, $secure = null)
     {
-        return asset(config('imageresize.route') . '/' . $template . '/' . $path, $secure);
+        if ($path) {
+            return asset(config('imageresize.route') . '/' . $template . '/' . $path, $secure);
+        }
     }
 }
