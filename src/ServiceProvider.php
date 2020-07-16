@@ -12,9 +12,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/config.php' => config_path('imageresize.php'),
+            __DIR__ . '/config.php' => config_path('imageresize.php'),
         ], 'config');
-        $this->loadRoutesFrom(__DIR__.'/routes.php');
+        $this->loadRoutesFrom(__DIR__ . '/routes.php');
         if ($this->app->runningInConsole()) {
             $this->commands([
                 UserCommand::class,
@@ -40,6 +40,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/config.php', 'imageresize');
+        $this->mergeConfigFrom(__DIR__ . '/config.php', 'imageresize');
     }
 }

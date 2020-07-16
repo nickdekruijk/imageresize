@@ -27,7 +27,7 @@ class UserCommand extends Command
      */
     public function __construct()
     {
-        $this->description = 'Delete the resized images from the "'.config('imageresize.route').'" folder.';
+        $this->description = 'Delete the resized images from the "' . config('imageresize.route') . '" folder.';
         parent::__construct();
     }
 
