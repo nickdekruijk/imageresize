@@ -20,6 +20,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 UserCommand::class,
             ]);
         }
+        $this->registerHelpers();
+    }
+
+    /**
+     * Register helpers file
+     */
+    public function registerHelpers()
+    {
+        if (file_exists($file = __DIR__ . '/helpers.php')) {
+            require $file;
+        }
     }
 
     /**
