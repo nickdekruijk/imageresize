@@ -70,9 +70,9 @@ class ResizeController extends Controller
             if (!is_dir($p)) {
                 $this->error('Not a directory: ' . $p);
             }
-            if (!is_writable($p)) {
-                $this->error('Not writable: ' . $p);
-            }
+        }
+        if (!is_writable($p)) {
+            $this->error('Not writable: ' . $p);
         }
     }
 
