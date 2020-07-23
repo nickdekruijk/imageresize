@@ -10,7 +10,9 @@ class ResizeController extends Controller
 {
     private static function error($message = 'Undefined error')
     {
-        if (config('app.debug') || App::runningInConsole()) {
+        if (App::runningInConsole()) {
+            dd($message);
+        } elseif (config('app.debug')) {
             throw new \Exception($message);
         } else {
             abort(404);
