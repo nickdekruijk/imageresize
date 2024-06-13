@@ -84,16 +84,16 @@ class ResizeController extends Controller
 
         # Create new GD instance based on image type
         if ($type == 'image/gif') {
-            $image_a = imagecreatefromgif($original) or $this->error();
+            $image_a = @imagecreatefromgif($original) or $this->error();
         } elseif ($type == 'image/png') {
-            $image_a = imagecreatefrompng($original) or $this->error();
+            $image_a = @imagecreatefrompng($original) or $this->error();
         } else {
-            $image_a = imagecreatefromjpeg($original) or $this->error();
+            $image_a = @imagecreatefromjpeg($original) or $this->error();
         }
 
         // Rotate image if exif orientation is set
         if (function_exists('exif_read_data')) {
-            $exif = exif_read_data($original);
+            $exif = @exif_read_data($original);
             if ($exif && isset($exif['Orientation'])) {
                 $orientation = $exif['Orientation'];
                 if ($orientation != 1) {
