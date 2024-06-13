@@ -3,7 +3,6 @@
 namespace NickDeKruijk\ImageResize;
 
 use App\Http\Controllers\Controller;
-use Cache;
 use App;
 
 class ResizeController extends Controller
@@ -90,6 +89,22 @@ class ResizeController extends Controller
             $image_a = imagecreatefrompng($original) or $this->error();
         } else {
             $image_a = imagecreatefromjpeg($original) or $this->error();
+        }
+
+        // Rotate image if exif orientation is set
+        if (function_exists('exif_read_data')) {
+            $exif = exif_read_data($original);
+            if ($exif && isset($exif['Orientation'])) {
+                $orientation = $exif['Orientation'];
+                if ($orientation != 1) {
+                    $deg = [3 => 180, 6 => 270, 8 => 90][$orientation] ?? 0;
+                    if ($deg) {
+                        $image_a = imagerotate($image_a, $deg, 0);
+                        $originalWidth = imagesx($image_a);
+                        $originalHeigth = imagesy($image_a);
+                    }
+                }
+            }
         }
 
         if ($template['type'] == 'crop') {
