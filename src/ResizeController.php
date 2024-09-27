@@ -80,7 +80,7 @@ class ResizeController extends Controller
         $originalSize = getimagesize($original) or $this->error($original . ' is not a valid image');
         $type = $originalSize['mime'];
         $originalWidth = $originalSize[0];
-        $originalHeigth = $originalSize[1];
+        $originalHeight = $originalSize[1];
 
         # Create new GD instance based on image type
         if ($type == 'image/gif') {
@@ -101,7 +101,7 @@ class ResizeController extends Controller
                     if ($deg) {
                         $image_a = imagerotate($image_a, $deg, 0);
                         $originalWidth = imagesx($image_a);
-                        $originalHeigth = imagesy($image_a);
+                        $originalHeight = imagesy($image_a);
                     }
                 }
             }
@@ -109,15 +109,15 @@ class ResizeController extends Controller
 
         if ($template['type'] == 'crop') {
             $targetWidth = $template['width'];
-            $targetHeigth = $originalHeigth * ($targetWidth / $originalWidth);
-            if ($targetHeigth < $template['height']) {
-                $targetHeigth = $template['height'];
-                $targetWidth = $originalWidth * ($targetHeigth / $originalHeigth);
+            $targetHeight = $originalHeight * ($targetWidth / $originalWidth);
+            if ($targetHeight < $template['height']) {
+                $targetHeight = $template['height'];
+                $targetWidth = $originalWidth * ($targetHeight / $originalHeight);
             }
-            $dst_img = imagecreatetruecolor($targetWidth, $targetHeigth);
+            $dst_img = imagecreatetruecolor($targetWidth, $targetHeight);
             imagealphablending($dst_img, false);
             imagesavealpha($dst_img, true);
-            imagecopyresampled($dst_img, $image_a, 0, 0, 0, 0, $targetWidth, $targetHeigth, imagesx($image_a), imagesy($image_a));
+            imagecopyresampled($dst_img, $image_a, 0, 0, 0, 0, $targetWidth, $targetHeight, imagesx($image_a), imagesy($image_a));
             imagedestroy($image_a);
             $image_p = imagecreatetruecolor($template['width'], $template['height']);
             imagealphablending($image_p, false);
@@ -125,21 +125,21 @@ class ResizeController extends Controller
             imagecopy($image_p, $dst_img, 0, 0, round((imagesx($dst_img) - $template['width']) / 2), round((imagesy($dst_img) - $template['height']) / 2), $template['width'], $template['height']);
             imagedestroy($dst_img);
         } elseif ($template['type'] == 'fit') {
-            $ratio_orig = $originalWidth / $originalHeigth;
+            $ratio_orig = $originalWidth / $originalHeight;
             if ($template['width'] / $template['height'] > $ratio_orig) {
                 $template['width'] = $template['height'] * $ratio_orig;
             } else {
                 $template['height'] = $template['width'] / $ratio_orig;
             }
-            if (($template['width'] > $originalWidth || $template['height'] > $originalHeigth) && (!isset($template['upscale']) || $template['upscale'] === false)) {
+            if (($template['width'] > $originalWidth || $template['height'] > $originalHeight) && (!isset($template['upscale']) || $template['upscale'] === false)) {
                 # Don't upscale image just copy it
-                $image_p = imagecreatetruecolor($originalWidth, $originalHeigth);
-                imagecopy($image_p, $image_a, 0, 0, 0, 0, $originalWidth, $originalHeigth);
+                $image_p = imagecreatetruecolor($originalWidth, $originalHeight);
+                imagecopy($image_p, $image_a, 0, 0, 0, 0, $originalWidth, $originalHeight);
             } else {
                 $image_p = imagecreatetruecolor($template['width'], $template['height']);
                 imagealphablending($image_p, false);
                 imagesavealpha($image_p, true);
-                imagecopyresampled($image_p, $image_a, 0, 0, 0, 0, $template['width'], $template['height'], $originalWidth, $originalHeigth);
+                imagecopyresampled($image_p, $image_a, 0, 0, 0, 0, $template['width'], $template['height'], $originalWidth, $originalHeight);
             }
             imagedestroy($image_a);
         } else {
