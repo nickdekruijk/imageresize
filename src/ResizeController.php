@@ -109,10 +109,10 @@ class ResizeController extends Controller
 
         if ($template['type'] == 'crop') {
             $targetWidth = $template['width'];
-            $targetHeight = $originalHeight * ($targetWidth / $originalWidth);
+            $targetHeight = $originalHeight * $targetWidth / $originalWidth;
             if ($targetHeight < $template['height']) {
                 $targetHeight = $template['height'];
-                $targetWidth = $originalWidth * ($targetHeight / $originalHeight);
+                $targetWidth = $originalWidth * $targetHeight / $originalHeight;
             }
             $dst_img = imagecreatetruecolor($targetWidth, $targetHeight);
             imagealphablending($dst_img, false);
