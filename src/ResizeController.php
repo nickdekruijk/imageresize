@@ -120,12 +120,10 @@ class ResizeController extends Controller
             imagealphablending($dst_img, false);
             imagesavealpha($dst_img, true);
             imagecopyresampled($dst_img, $image_a, 0, 0, 0, 0, $targetWidth, $targetHeight, imagesx($image_a), imagesy($image_a));
-            imagedestroy($image_a);
             $image_p = imagecreatetruecolor($template['width'], $template['height']);
             imagealphablending($image_p, false);
             imagesavealpha($image_p, true);
             imagecopy($image_p, $dst_img, 0, 0, round((imagesx($dst_img) - $template['width']) / 2), round((imagesy($dst_img) - $template['height']) / 2), $template['width'], $template['height']);
-            imagedestroy($dst_img);
         } elseif ($template['type'] == 'fit') {
             $ratio_orig = $originalWidth / $originalHeight;
             if ($template['width'] / $template['height'] > $ratio_orig) {
@@ -143,7 +141,6 @@ class ResizeController extends Controller
                 imagesavealpha($image_p, true);
                 imagecopyresampled($image_p, $image_a, 0, 0, 0, 0, $template['width'], $template['height'], $originalWidth, $originalHeight);
             }
-            imagedestroy($image_a);
         } else {
             $this->error('Invalid template type ' . $template['type']);
         }
@@ -181,8 +178,6 @@ class ResizeController extends Controller
         } else {
             imagejpeg($image_p, $target, isset($template['quality']) ? $template['quality'] : config('imageresize.quality_jpeg')) or $this->error('Write error');
         }
-
-        imagedestroy($image_p);
     }
 
     public function make($template, $image)
