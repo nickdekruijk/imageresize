@@ -84,11 +84,13 @@ class ResizeController extends Controller
 
         # Create new GD instance based on image type
         if ($type == 'image/gif') {
-            $image_a = @imagecreatefromgif($original) or $this->error();
+            $image_a = @imagecreatefromgif($original) or $this->error('Invalid ' . $type);
         } elseif ($type == 'image/png') {
-            $image_a = @imagecreatefrompng($original) or $this->error();
+            $image_a = @imagecreatefrompng($original) or $this->error('Invalid ' . $type);
+        } elseif ($type == 'image/webp') {
+            $image_a = @imagecreatefromwebp($original) or $this->error('Invalid ' . $type);
         } else {
-            $image_a = @imagecreatefromjpeg($original) or $this->error();
+            $image_a = @imagecreatefromjpeg($original) or $this->error('Invalid ' . $type);
         }
 
         // Rotate image if exif orientation is set
@@ -174,6 +176,8 @@ class ResizeController extends Controller
             imagegif($image_p, $target) or $this->error('Write error');
         } elseif ($type == 'image/png') {
             imagepng($image_p, $target) or $this->error('Write error');
+        } elseif ($type == 'image/webp') {
+            imagewebp($image_p, $target) or $this->error('Write error');
         } else {
             imagejpeg($image_p, $target, isset($template['quality']) ? $template['quality'] : config('imageresize.quality_jpeg')) or $this->error('Write error');
         }
