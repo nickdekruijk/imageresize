@@ -77,7 +77,7 @@ class ResizeController extends Controller
 
     public function resize($template, $original, $target)
     {
-        $originalSize = getimagesize($original) or $this->error($original . ' is not a valid image');
+        $originalSize = @getimagesize($original) or $this->error($original . ' is not a valid image');
         $type = $originalSize['mime'];
         $originalWidth = $originalSize[0];
         $originalHeight = $originalSize[1];
